@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Raspberry Pi IoT and Data Science Project">
+  <meta name="author" content="Mihai Criveti, Lin Zhang">
+  <link rel="shortcut icon" href="./img/favicon.ico">
+  <title>Home - Foxie</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="./css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/";
+  </script>
+  
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> Foxie</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href=".">Home</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#iot-platform-for-the-raspberry-pi">IoT Platform for the Raspberry Pi</a></li>
+    
+
+    <li class="toctree-l2"><a href="#foxie-pi">Foxie Pi</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#pi-rest-api">PI Rest API</a></li>
+        
+            <li><a class="toctree-l3" href="#server-collects-data-from-raspberry-pi-and-stores-the-results-in-a-sql-database">Server: Collects Data from Raspberry Pi and stores the results in a SQL Database</a></li>
+        
+            <li><a class="toctree-l3" href="#front-end-display-plots-charts-interface">Front-end: Display Plots / Charts / Interface</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#reference">Reference:</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="raspberry/">Raspberry Pi</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="sensors/">PI Sensors REST API with Flask</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="database/">Database Access with SQLAlchemy</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="graphs/">Plotting Graphs with Bokeh</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="authors/">About</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">Foxie</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/edit/master/docs/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="iot-platform-for-the-raspberry-pi">IoT Platform for the Raspberry Pi<a class="headerlink" href="#iot-platform-for-the-raspberry-pi" title="Permanent link">#</a></h1>
+<blockquote>
+<p>Mihai Criveti, Lin Zhang</p>
+</blockquote>
+<p><img alt="foxie.jpg" src="./foxie.jpg" /></p>
+<h1 id="foxie-pi">Foxie Pi<a class="headerlink" href="#foxie-pi" title="Permanent link">#</a></h1>
+<blockquote>
+<p>Raspberry Pi - IoT and Cognitive Platform with Python Flask, Requests and Bokeh
+An educational tool and framework for monitoring and collecting IoT sensor data using the Raspberry Pi in a Client / Server model.</p>
+</blockquote>
+<h2 id="pi-rest-api">PI Rest API<a class="headerlink" href="#pi-rest-api" title="Permanent link">#</a></h2>
+<blockquote>
+<p><code>pi_rest_api.py</code> collects data from sensors on the Raspberry Pi (sense_hat, Texas Instruments T1, USB temperature probe) and system libraries (pi version, cpu temperature, info) and publishes it using Flask as a REST API.
+- [X] Displays data from SenseHat
+- [X] Push data to pixel display
+- [X] Displays more than 1 number on display (for temperature, etc)</p>
+</blockquote>
+<h2 id="server-collects-data-from-raspberry-pi-and-stores-the-results-in-a-sql-database">Server: Collects Data from Raspberry Pi and stores the results in a SQL Database<a class="headerlink" href="#server-collects-data-from-raspberry-pi-and-stores-the-results-in-a-sql-database" title="Permanent link">#</a></h2>
+<blockquote>
+<p><code>db_insert.py</code> and <code>db_read.py</code>. Uses SQLAlchemy ORM and can be configured with your database of choice. SQLite3 by default.
+- [X] SQL Database (sqlite3)
+- [X] Database model (SQLAlchemy)
+- [X] Inserts data into the database
+- [X] Reads data from the database</p>
+</blockquote>
+<h2 id="front-end-display-plots-charts-interface">Front-end: Display Plots / Charts / Interface<a class="headerlink" href="#front-end-display-plots-charts-interface" title="Permanent link">#</a></h2>
+<blockquote>
+<p><code>db_plot.py</code> - retrieves DATA from the REST API (rows in the database) and plots values using Bokeh.
+- [X] Plots data from server database</p>
+</blockquote>
+<h1 id="reference">Reference:<a class="headerlink" href="#reference" title="Permanent link">#</a></h1>
+<ul>
+<li>https://projects.raspberrypi.org/en/projects/getting-started-with-the-sense-hat</li>
+<li>http://yaab-arduino.blogspot.ie/2016/08/display-two-digits-numbers-on-raspberry.html</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="raspberry/" class="btn btn-neutral float-right" title="Raspberry Pi">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+        <span style="margin-left: 15px"><a href="raspberry/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="./js/theme.js"></script>
+      <script src="./search/require.js"></script>
+      <script src="./search/search.js"></script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 0.17.2
+Build Date UTC : 2018-04-03 10:28:20
+-->

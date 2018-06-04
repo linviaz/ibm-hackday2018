@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Mihai Criveti, Lin Zhang">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Database Access with SQLAlchemy - Foxie</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Database Access with SQLAlchemy";
+    var mkdocs_page_input_path = "database.md";
+    var mkdocs_page_url = "/database/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Foxie</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../raspberry/">Raspberry Pi</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../sensors/">PI Sensors REST API with Flask</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Database Access with SQLAlchemy</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#database-schema">Database schema:</a></li>
+    
+
+    <li class="toctree-l2"><a href="#database-orm-model-using-sqlalchemy">Database ORM Model using SQLAlchemy:</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../graphs/">Plotting Graphs with Bokeh</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../authors/">About</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Foxie</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Database Access with SQLAlchemy</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/edit/master/docs/database.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="database-schema">Database schema:<a class="headerlink" href="#database-schema" title="Permanent link">#</a></h1>
+<pre><code class="sql">CREATE TABLE foxie (
+        id INTEGER NOT NULL,
+        corrected_temp FLOAT NOT NULL,
+        cpu_temp FLOAT NOT NULL,
+        engineers VARCHAR(255),
+        fqdn VARCHAR(255),
+        humidity FLOAT NOT NULL,
+        latitude FLOAT NOT NULL,
+        location VARCHAR(255),
+        longitude FLOAT NOT NULL,
+        pi_ver VARCHAR(255),
+        pressure FLOAT NOT NULL,
+        project VARCHAR(255),
+        sealevel FLOAT NOT NULL,
+        sensorid INTEGER NOT NULL,
+        temperature FLOAT NOT NULL,
+        timestamp DATETIME,
+        tz VARCHAR(255),
+        PRIMARY KEY (id)
+);
+</code></pre>
+
+<h1 id="database-orm-model-using-sqlalchemy">Database ORM Model using SQLAlchemy:<a class="headerlink" href="#database-orm-model-using-sqlalchemy" title="Permanent link">#</a></h1>
+<blockquote>
+<p>Map database to python objects:</p>
+</blockquote>
+<pre><code class="python3">import datetime
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine
+
+Base = declarative_base()
+
+# Declare the Foxie class:
+class Foxie(Base):
+    __tablename__ = 'foxie'
+    id = Column(Integer, primary_key=True)
+    corrected_temp = Column(Float, nullable = False)
+    cpu_temp = Column(Float, nullable = False)
+    engineers = Column(String(255))
+    fqdn = Column(String(255))
+    humidity = Column(Float, nullable = False)
+    latitude = Column(Float, nullable = False)
+    location = Column(String(255))
+    longitude = Column(Float, nullable = False)
+    pi_ver = Column(String(255))
+    pressure = Column(Float, nullable = False)
+    project = Column(String(255))
+    sealevel = Column(Float, nullable = False)
+    sensorid = Column(Integer, nullable = False)
+    temperature = Column(Float, nullable = False)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    tz = Column(String(255))
+
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../graphs/" class="btn btn-neutral float-right" title="Plotting Graphs with Bokeh">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../sensors/" class="btn btn-neutral" title="PI Sensors REST API with Flask"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../sensors/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../graphs/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

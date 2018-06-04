@@ -1,0 +1,119 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "IoT Platform for the Raspberry Pi\n#\n\n\n\n\nMihai Criveti, Lin Zhang\n\n\n\n\n\n\nFoxie Pi\n#\n\n\n\n\nRaspberry Pi - IoT and Cognitive Platform with Python Flask, Requests and Bokeh\nAn educational tool and framework for monitoring and collecting IoT sensor data using the Raspberry Pi in a Client / Server model.\n\n\n\n\nPI Rest API\n#\n\n\n\n\npi_rest_api.py\n collects data from sensors on the Raspberry Pi (sense_hat, Texas Instruments T1, USB temperature probe) and system libraries (pi version, cpu temperature, info) and publishes it using Flask as a REST API.\n- [X] Displays data from SenseHat\n- [X] Push data to pixel display\n- [X] Displays more than 1 number on display (for temperature, etc)\n\n\n\n\nServer: Collects Data from Raspberry Pi and stores the results in a SQL Database\n#\n\n\n\n\ndb_insert.py\n and \ndb_read.py\n. Uses SQLAlchemy ORM and can be configured with your database of choice. SQLite3 by default.\n- [X] SQL Database (sqlite3)\n- [X] Database model (SQLAlchemy)\n- [X] Inserts data into the database\n- [X] Reads data from the database\n\n\n\n\nFront-end: Display Plots / Charts / Interface\n#\n\n\n\n\ndb_plot.py\n - retrieves DATA from the REST API (rows in the database) and plots values using Bokeh.\n- [X] Plots data from server database\n\n\n\n\nReference:\n#\n\n\n\n\nhttps://projects.raspberrypi.org/en/projects/getting-started-with-the-sense-hat\n\n\nhttp://yaab-arduino.blogspot.ie/2016/08/display-two-digits-numbers-on-raspberry.html", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#iot-platform-for-the-raspberry-pi", 
+            "text": "Mihai Criveti, Lin Zhang", 
+            "title": "IoT Platform for the Raspberry Pi"
+        }, 
+        {
+            "location": "/#foxie-pi", 
+            "text": "Raspberry Pi - IoT and Cognitive Platform with Python Flask, Requests and Bokeh\nAn educational tool and framework for monitoring and collecting IoT sensor data using the Raspberry Pi in a Client / Server model.", 
+            "title": "Foxie Pi"
+        }, 
+        {
+            "location": "/#pi-rest-api", 
+            "text": "pi_rest_api.py  collects data from sensors on the Raspberry Pi (sense_hat, Texas Instruments T1, USB temperature probe) and system libraries (pi version, cpu temperature, info) and publishes it using Flask as a REST API.\n- [X] Displays data from SenseHat\n- [X] Push data to pixel display\n- [X] Displays more than 1 number on display (for temperature, etc)", 
+            "title": "PI Rest API"
+        }, 
+        {
+            "location": "/#server-collects-data-from-raspberry-pi-and-stores-the-results-in-a-sql-database", 
+            "text": "db_insert.py  and  db_read.py . Uses SQLAlchemy ORM and can be configured with your database of choice. SQLite3 by default.\n- [X] SQL Database (sqlite3)\n- [X] Database model (SQLAlchemy)\n- [X] Inserts data into the database\n- [X] Reads data from the database", 
+            "title": "Server: Collects Data from Raspberry Pi and stores the results in a SQL Database"
+        }, 
+        {
+            "location": "/#front-end-display-plots-charts-interface", 
+            "text": "db_plot.py  - retrieves DATA from the REST API (rows in the database) and plots values using Bokeh.\n- [X] Plots data from server database", 
+            "title": "Front-end: Display Plots / Charts / Interface"
+        }, 
+        {
+            "location": "/#reference", 
+            "text": "https://projects.raspberrypi.org/en/projects/getting-started-with-the-sense-hat  http://yaab-arduino.blogspot.ie/2016/08/display-two-digits-numbers-on-raspberry.html", 
+            "title": "Reference:"
+        }, 
+        {
+            "location": "/raspberry/", 
+            "text": "Raspberry Pi Setup\n#\n\n\n\n\nThe following components were used:\n\n\n\n\nRaspberry Pi Model 3\n#\n\n\n\n\nRunning Raspbian Linux\n\n\n\n\nSensors:\n#\n\n\n\n\nSense Hat (temperature, humidity, pressure, etc).\n\n\nTexas Instruments T1 (lower power bluetooth) \nfor remote sensors (light, digital microphone, magnetic sensor, humidity, pressure, accelerometer, gyroscope, magnetometer, object temperature, and ambient temperature)\n\n\nDS18B20 Waterproof Digital temperature sensor (calibration)", 
+            "title": "Raspberry Pi"
+        }, 
+        {
+            "location": "/raspberry/#raspberry-pi-setup", 
+            "text": "The following components were used:", 
+            "title": "Raspberry Pi Setup"
+        }, 
+        {
+            "location": "/raspberry/#raspberry-pi-model-3", 
+            "text": "Running Raspbian Linux", 
+            "title": "Raspberry Pi Model 3"
+        }, 
+        {
+            "location": "/raspberry/#sensors", 
+            "text": "Sense Hat (temperature, humidity, pressure, etc).  Texas Instruments T1 (lower power bluetooth) \nfor remote sensors (light, digital microphone, magnetic sensor, humidity, pressure, accelerometer, gyroscope, magnetometer, object temperature, and ambient temperature)  DS18B20 Waterproof Digital temperature sensor (calibration)", 
+            "title": "Sensors:"
+        }, 
+        {
+            "location": "/sensors/", 
+            "text": "Accessing Sensor Data with Python:\n#\n\n\n\n\nAverage the temperature readings from the 2 sensors:\n\n\n\n\ndef get_temperature():\n    \nAverage temperature in degrees Celsius from humidity and pressure sensor\n\n    \n temp1 = get_temperature()\n    \n (isinstance(temp1, float)) and (-50.0 \n= temp1 \n= 150.0)\n    True\n    \n\n    return((sense.get_temperature_from_humidity() + sense.get_temperature_from_pressure()) / 2)\n\n\n\n\nCalibrating the temperature:\n#\n\n\n\n\nThe sensehat sits too close to the Raspberry Pi CPU.\nA function was created to calibrate the temperature reading.\n\n\n\n\nPI_CPUTEMP_CMD = '/opt/vc/bin/vcgencmd measure_temp'\ndef get_cpu_temp():\n    \nReturns the Raspberry Pi CPU Temperature\n\n    \n type(get_cpu_temp())\n    \nclass 'float'\n\n    \n\n    # Check if the command returns a temperature.. if not, return an error?\n    stdout_data = subprocess.getoutput(PI_CPUTEMP_CMD)\n    return clean_temp(stdout_data.split()[0])\n\ndef get_corrected_temp():\n    \nReturns corrected temperature readings\n\n    \n type(get_corrected_temp())\n    \nclass 'float'\n\n    \n\n    temp = get_temperature()\n    cpu_temp = get_cpu_temp()\n    temp_calibrated = temp - ((cpu_temp - temp)/5.466) - 5\n    return temp_calibrated", 
+            "title": "PI Sensors REST API with Flask"
+        }, 
+        {
+            "location": "/sensors/#accessing-sensor-data-with-python", 
+            "text": "Average the temperature readings from the 2 sensors:   def get_temperature():\n     Average temperature in degrees Celsius from humidity and pressure sensor\n\n      temp1 = get_temperature()\n      (isinstance(temp1, float)) and (-50.0  = temp1  = 150.0)\n    True\n     \n    return((sense.get_temperature_from_humidity() + sense.get_temperature_from_pressure()) / 2)", 
+            "title": "Accessing Sensor Data with Python:"
+        }, 
+        {
+            "location": "/sensors/#calibrating-the-temperature", 
+            "text": "The sensehat sits too close to the Raspberry Pi CPU.\nA function was created to calibrate the temperature reading.   PI_CPUTEMP_CMD = '/opt/vc/bin/vcgencmd measure_temp'\ndef get_cpu_temp():\n     Returns the Raspberry Pi CPU Temperature\n\n      type(get_cpu_temp())\n     class 'float' \n     \n    # Check if the command returns a temperature.. if not, return an error?\n    stdout_data = subprocess.getoutput(PI_CPUTEMP_CMD)\n    return clean_temp(stdout_data.split()[0])\n\ndef get_corrected_temp():\n     Returns corrected temperature readings\n\n      type(get_corrected_temp())\n     class 'float' \n     \n    temp = get_temperature()\n    cpu_temp = get_cpu_temp()\n    temp_calibrated = temp - ((cpu_temp - temp)/5.466) - 5\n    return temp_calibrated", 
+            "title": "Calibrating the temperature:"
+        }, 
+        {
+            "location": "/database/", 
+            "text": "Database schema:\n#\n\n\nCREATE TABLE foxie (\n        id INTEGER NOT NULL,\n        corrected_temp FLOAT NOT NULL,\n        cpu_temp FLOAT NOT NULL,\n        engineers VARCHAR(255),\n        fqdn VARCHAR(255),\n        humidity FLOAT NOT NULL,\n        latitude FLOAT NOT NULL,\n        location VARCHAR(255),\n        longitude FLOAT NOT NULL,\n        pi_ver VARCHAR(255),\n        pressure FLOAT NOT NULL,\n        project VARCHAR(255),\n        sealevel FLOAT NOT NULL,\n        sensorid INTEGER NOT NULL,\n        temperature FLOAT NOT NULL,\n        timestamp DATETIME,\n        tz VARCHAR(255),\n        PRIMARY KEY (id)\n);\n\n\n\n\nDatabase ORM Model using SQLAlchemy:\n#\n\n\n\n\nMap database to python objects:\n\n\n\n\nimport datetime\nfrom sqlalchemy import Column, ForeignKey, Integer, String, Float, DateTime\nfrom sqlalchemy.ext.declarative import declarative_base\nfrom sqlalchemy.orm import relationship\nfrom sqlalchemy import create_engine\n\nBase = declarative_base()\n\n# Declare the Foxie class:\nclass Foxie(Base):\n    __tablename__ = 'foxie'\n    id = Column(Integer, primary_key=True)\n    corrected_temp = Column(Float, nullable = False)\n    cpu_temp = Column(Float, nullable = False)\n    engineers = Column(String(255))\n    fqdn = Column(String(255))\n    humidity = Column(Float, nullable = False)\n    latitude = Column(Float, nullable = False)\n    location = Column(String(255))\n    longitude = Column(Float, nullable = False)\n    pi_ver = Column(String(255))\n    pressure = Column(Float, nullable = False)\n    project = Column(String(255))\n    sealevel = Column(Float, nullable = False)\n    sensorid = Column(Integer, nullable = False)\n    temperature = Column(Float, nullable = False)\n    timestamp = Column(DateTime, default=datetime.datetime.utcnow)\n    tz = Column(String(255))", 
+            "title": "Database Access with SQLAlchemy"
+        }, 
+        {
+            "location": "/database/#database-schema", 
+            "text": "CREATE TABLE foxie (\n        id INTEGER NOT NULL,\n        corrected_temp FLOAT NOT NULL,\n        cpu_temp FLOAT NOT NULL,\n        engineers VARCHAR(255),\n        fqdn VARCHAR(255),\n        humidity FLOAT NOT NULL,\n        latitude FLOAT NOT NULL,\n        location VARCHAR(255),\n        longitude FLOAT NOT NULL,\n        pi_ver VARCHAR(255),\n        pressure FLOAT NOT NULL,\n        project VARCHAR(255),\n        sealevel FLOAT NOT NULL,\n        sensorid INTEGER NOT NULL,\n        temperature FLOAT NOT NULL,\n        timestamp DATETIME,\n        tz VARCHAR(255),\n        PRIMARY KEY (id)\n);", 
+            "title": "Database schema:"
+        }, 
+        {
+            "location": "/database/#database-orm-model-using-sqlalchemy", 
+            "text": "Map database to python objects:   import datetime\nfrom sqlalchemy import Column, ForeignKey, Integer, String, Float, DateTime\nfrom sqlalchemy.ext.declarative import declarative_base\nfrom sqlalchemy.orm import relationship\nfrom sqlalchemy import create_engine\n\nBase = declarative_base()\n\n# Declare the Foxie class:\nclass Foxie(Base):\n    __tablename__ = 'foxie'\n    id = Column(Integer, primary_key=True)\n    corrected_temp = Column(Float, nullable = False)\n    cpu_temp = Column(Float, nullable = False)\n    engineers = Column(String(255))\n    fqdn = Column(String(255))\n    humidity = Column(Float, nullable = False)\n    latitude = Column(Float, nullable = False)\n    location = Column(String(255))\n    longitude = Column(Float, nullable = False)\n    pi_ver = Column(String(255))\n    pressure = Column(Float, nullable = False)\n    project = Column(String(255))\n    sealevel = Column(Float, nullable = False)\n    sensorid = Column(Integer, nullable = False)\n    temperature = Column(Float, nullable = False)\n    timestamp = Column(DateTime, default=datetime.datetime.utcnow)\n    tz = Column(String(255))", 
+            "title": "Database ORM Model using SQLAlchemy:"
+        }, 
+        {
+            "location": "/graphs/", 
+            "text": "Creating a plot using Bokeh:\n#\n\n\n\n\nThis renders data to HTML:\n\n\n\n\nfrom bokeh.plotting import figure, output_file, save\n\ndef create_plot(x, y):\n    \n Create a static HTML file with plot data \n\n    # output to static HTML file\n    output_file(\ntemplates/temperature.html\n, title=\ntemperature plot\n)\n\n    # create a new plot with a title and axis labels\n    p = figure(title=\ntemperature plot\n, x_axis_label='x', y_axis_label='y')\n\n    # add a line renderer with legend and line thickness\n    p.line(x, y, legend=\nTemp.\n, line_width=2)\n\n    # save the results\n    save(p)\n\n\n\n\n\nCreating a website using Flask:\n#\n\n\nfrom flask import Flask, render_template\nfrom db_read import get_temp\napp = Flask(__name__)\n\n@app.route('/')\ndef graph():\n    # Plot temperature values. x = list of 0 to nr of readings. y = readings\n    temp_list = get_temp()['data']\n    x = list(range(len(temp_list)))\n    y = temp_list\n    print(x,y)\n\n    create_plot(x, y)\n    return render_template('temperature.html')\n\nif __name__ == '__main__':\n    app.jinja_env.auto_reload = True\n    app.config['TEMPLATES_AUTO_RELOAD'] = True\n    app.run('0.0.0.0', port=8080)", 
+            "title": "Plotting Graphs with Bokeh"
+        }, 
+        {
+            "location": "/graphs/#creating-a-plot-using-bokeh", 
+            "text": "This renders data to HTML:   from bokeh.plotting import figure, output_file, save\n\ndef create_plot(x, y):\n      Create a static HTML file with plot data  \n    # output to static HTML file\n    output_file( templates/temperature.html , title= temperature plot )\n\n    # create a new plot with a title and axis labels\n    p = figure(title= temperature plot , x_axis_label='x', y_axis_label='y')\n\n    # add a line renderer with legend and line thickness\n    p.line(x, y, legend= Temp. , line_width=2)\n\n    # save the results\n    save(p)", 
+            "title": "Creating a plot using Bokeh:"
+        }, 
+        {
+            "location": "/graphs/#creating-a-website-using-flask", 
+            "text": "from flask import Flask, render_template\nfrom db_read import get_temp\napp = Flask(__name__)\n\n@app.route('/')\ndef graph():\n    # Plot temperature values. x = list of 0 to nr of readings. y = readings\n    temp_list = get_temp()['data']\n    x = list(range(len(temp_list)))\n    y = temp_list\n    print(x,y)\n\n    create_plot(x, y)\n    return render_template('temperature.html')\n\nif __name__ == '__main__':\n    app.jinja_env.auto_reload = True\n    app.config['TEMPLATES_AUTO_RELOAD'] = True\n    app.run('0.0.0.0', port=8080)", 
+            "title": "Creating a website using Flask:"
+        }, 
+        {
+            "location": "/authors/", 
+            "text": "Mihai Criveti\n#\n\n\nLin Zhang\n#", 
+            "title": "About"
+        }, 
+        {
+            "location": "/authors/#mihai-criveti", 
+            "text": "", 
+            "title": "Mihai Criveti"
+        }, 
+        {
+            "location": "/authors/#lin-zhang", 
+            "text": "", 
+            "title": "Lin Zhang"
+        }
+    ]
+}

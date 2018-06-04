@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>http://blog.boreas.ro/</loc>
+     <lastmod>2018-04-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://blog.boreas.ro/raspberry/</loc>
+     <lastmod>2018-04-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://blog.boreas.ro/sensors/</loc>
+     <lastmod>2018-04-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://blog.boreas.ro/database/</loc>
+     <lastmod>2018-04-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://blog.boreas.ro/graphs/</loc>
+     <lastmod>2018-04-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>http://blog.boreas.ro/authors/</loc>
+     <lastmod>2018-04-03</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+</urlset>

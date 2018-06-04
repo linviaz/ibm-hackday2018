@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Mihai Criveti, Lin Zhang">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Plotting Graphs with Bokeh - Foxie</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Plotting Graphs with Bokeh";
+    var mkdocs_page_input_path = "graphs.md";
+    var mkdocs_page_url = "/graphs/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Foxie</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../raspberry/">Raspberry Pi</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../sensors/">PI Sensors REST API with Flask</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../database/">Database Access with SQLAlchemy</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Plotting Graphs with Bokeh</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#creating-a-plot-using-bokeh">Creating a plot using Bokeh:</a></li>
+    
+
+    <li class="toctree-l2"><a href="#creating-a-website-using-flask">Creating a website using Flask:</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../authors/">About</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Foxie</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Plotting Graphs with Bokeh</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/edit/master/docs/graphs.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="creating-a-plot-using-bokeh">Creating a plot using Bokeh:<a class="headerlink" href="#creating-a-plot-using-bokeh" title="Permanent link">#</a></h1>
+<blockquote>
+<p>This renders data to HTML:</p>
+</blockquote>
+<pre><code class="python3">from bokeh.plotting import figure, output_file, save
+
+def create_plot(x, y):
+    &quot;&quot;&quot; Create a static HTML file with plot data &quot;&quot;&quot;
+    # output to static HTML file
+    output_file(&quot;templates/temperature.html&quot;, title=&quot;temperature plot&quot;)
+
+    # create a new plot with a title and axis labels
+    p = figure(title=&quot;temperature plot&quot;, x_axis_label='x', y_axis_label='y')
+
+    # add a line renderer with legend and line thickness
+    p.line(x, y, legend=&quot;Temp.&quot;, line_width=2)
+
+    # save the results
+    save(p)
+
+</code></pre>
+
+<h1 id="creating-a-website-using-flask">Creating a website using Flask:<a class="headerlink" href="#creating-a-website-using-flask" title="Permanent link">#</a></h1>
+<pre><code class="python3">from flask import Flask, render_template
+from db_read import get_temp
+app = Flask(__name__)
+
+@app.route('/')
+def graph():
+    # Plot temperature values. x = list of 0 to nr of readings. y = readings
+    temp_list = get_temp()['data']
+    x = list(range(len(temp_list)))
+    y = temp_list
+    print(x,y)
+
+    create_plot(x, y)
+    return render_template('temperature.html')
+
+if __name__ == '__main__':
+    app.jinja_env.auto_reload = True
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.run('0.0.0.0', port=8080)
+
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../authors/" class="btn btn-neutral float-right" title="About">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../database/" class="btn btn-neutral" title="Database Access with SQLAlchemy"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../database/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../authors/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

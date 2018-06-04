@@ -1,0 +1,22 @@
+site_name: Foxie
+site_url: http://blog.boreas.ro
+repo_url: https://github.com
+site_description: Raspberry Pi IoT and Data Science Project
+site_author: Mihai Criveti, Lin Zhang
+
+pages:
+    - Home: index.md
+    - Raspberry Pi: raspberry.md
+    - PI Sensors REST API with Flask: sensors.md
+    - Database Access with SQLAlchemy: database.md
+    - Plotting Graphs with Bokeh: graphs.md
+    - About: authors.md
+
+theme: readthedocs
+
+plugins:
+    - search
+
+markdown_extensions:
+    - toc:
+        permalink: "#"
