@@ -4,7 +4,7 @@
 > An educational tool and framework for monitoring and collecting IoT sensor data using the Raspberry Pi in a Client / Server model.
 
 ## Video Presentation:
-![https://youtu.be/bcJ-k2CZtr0](https://youtu.be/bcJ-k2CZtr0)
+- https://youtu.be/bcJ-k2CZtr0
 
 ## Documentation:
 - Documentation: [docs/project/site/index.html](docs/project/site/index.html)
